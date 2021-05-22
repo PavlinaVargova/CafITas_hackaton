@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class TestyPrihlaseniNaKurz {
+public class TestyPrihlaseniUzivateleAKontrolaUdaju {
 
     // Nejdrive konstanty
     private static final String URL_APLIKACE = "http://czechitas-datestovani-hackathon.cz/en/";
@@ -27,15 +27,8 @@ public class TestyPrihlaseniNaKurz {
     @Test
     public void prihlaseniKUctu() {
         prohlizec.navigate().to(URL_APLIKACE);
-        WebElement odkazPrihlasit = prohlizec.findElement(By.xpath("/html/body/div[1]/div[1]/header/div[3]/div/div/div[7]/ul/li/a/span"));
-        odkazPrihlasit.click();
 
-        WebElement polickoEmail = prohlizec.findElement(By.id("email"));
-        polickoEmail.sendKeys("hjh@gmail.com");
-        WebElement polickoHeslo = prohlizec.findElement(By.id("passwd"));
-        polickoHeslo.sendKeys("12345");
-        WebElement tlacitkoPrihlasit = prohlizec.findElement(By.xpath("/html/body/div/div[2]/div/div[2]/div/div/div[2]/form/div/p[2]/button/span"));
-        tlacitkoPrihlasit.click();
+        this.prihlaseniUzivatele();
 
         Assertions.assertTrue(prohlizec.getCurrentUrl().endsWith("/my-account"));
     }
@@ -43,14 +36,7 @@ public class TestyPrihlaseniNaKurz {
     @Test
     public void uzivatelPoPrihlaseniKeSvemuUctuMusiBytSchopenZkontrolovatSveUdaje() {
         prohlizec.navigate().to(URL_APLIKACE);
-        WebElement odkazPrihlasit = prohlizec.findElement(By.xpath("/html/body/div[1]/div[1]/header/div[3]/div/div/div[7]/ul/li/a/span"));
-        odkazPrihlasit.click();
-        WebElement polickoEmail = prohlizec.findElement(By.id("email"));
-        polickoEmail.sendKeys("hjh@gmail.com");
-        WebElement polickoHeslo = prohlizec.findElement(By.id("passwd"));
-        polickoHeslo.sendKeys("12345");
-        WebElement tlacitkoPrihlasit = prohlizec.findElement(By.xpath("/html/body/div/div[2]/div/div[2]/div/div/div[2]/form/div/p[2]/button/span"));
-        tlacitkoPrihlasit.click();
+        this.prihlaseniUzivatele();
         Assertions.assertTrue(prohlizec.getCurrentUrl().endsWith("/my-account"));
 
         WebElement tlacitkoMojeAdresa = prohlizec.findElement(By.xpath("/html/body/div/div[2]/div/div[2]/div/div/div/ul/li[3]/a/span"));
@@ -70,6 +56,18 @@ public class TestyPrihlaseniNaKurz {
         Assertions.assertEquals("brno", mesto.getText());
         Assertions.assertEquals("Czech Republic", stat.getText());
         Assertions.assertEquals("123456789", telefoniCislo.getText());
+    }
+
+    //-------------------
+    public void prihlaseniUzivatele() {
+        WebElement odkazPrihlasit = prohlizec.findElement(By.xpath("/html/body/div[1]/div[1]/header/div[3]/div/div/div[7]/ul/li/a/span"));
+        odkazPrihlasit.click();
+        WebElement polickoEmail = prohlizec.findElement(By.id("email"));
+        polickoEmail.sendKeys("hjh@gmail.com");
+        WebElement polickoHeslo = prohlizec.findElement(By.id("passwd"));
+        polickoHeslo.sendKeys("12345");
+        WebElement tlacitkoPrihlasit = prohlizec.findElement(By.xpath("/html/body/div/div[2]/div/div[2]/div/div/div[2]/form/div/p[2]/button/span"));
+        tlacitkoPrihlasit.click();
     }
 
     @AfterEach
